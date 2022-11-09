@@ -2,7 +2,6 @@ import config from '../config.json'
 import styled from 'styled-components'
 import { CSSReset } from '../src/components/CSSReset';
 import Menu from '../src/components/Menu';
-import { StyledTimeline } from "../src/components/Timeline";
 function HomePage() {
     const estiloHome = { 
         //backgroundColor: "red" 
@@ -18,9 +17,7 @@ function HomePage() {
         }}>
             <Menu />
             <Header />
-            <Timeline playlists={config.playlists}>
-                Conteúdo
-            </Timeline>
+            
         </div>
     </>
 
@@ -66,31 +63,3 @@ function Header() {
     )
 }
 
-function Timeline(props) {
-    //console.log("Componente", props.playlists);
-    const playlistNames = Object.keys(props.playlists);
-    return (
-        <StyledTimeline>
-            {playlistNames.map((playlistName) => {
-            const videos = props.playlists[playlistName];   
-            return (
-                <section>
-                    <h2>{playlistName}</h2>
-                    <div>
-                        {videos.map((video) => {
-                            return (
-                                <a href={video.url}>
-                                    <img src={video.thumb} />
-                                    <span>
-                                        {video.title}
-                                    </span>
-                                </a>
-                            )
-                        })}
-                    </div>
-                </section>
-               )
-            })}
-        </StyledTimeline>
-    )
-}
