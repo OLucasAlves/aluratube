@@ -2,24 +2,28 @@ import config from '../config.json'
 import styled from 'styled-components'
 import { CSSReset } from '../src/components/CSSReset';
 import Menu from '../src/components/Menu';
+import { StyledTimeline } from '../src/components/TimeLine';
+
 function HomePage() {
-    const estiloHome = { 
+    const estiloHome = {
         //backgroundColor: "red" 
     }
     return (
         <>
-        <CSSReset />
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            flex: 1,
-            // backgroundColor: "red",
-        }}>
-            <Menu />
-            <Header />
-            
-        </div>
-    </>
+            <CSSReset />
+            <div style={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+                // backgroundColor: "red",
+            }}>
+                <Menu />
+                <Header />
+                <Timeline playlists={config.playlists}>
+                    Conteúdo
+                </Timeline>
+            </div>
+        </>
 
 
     );
@@ -60,6 +64,39 @@ function Header() {
             </section>
 
         </StyledHeader>
+    )
+}
+
+function Timeline(propriedades) {
+    // console.log("Dentro do componente", propriedades.playlists);
+    const playlistNames = Object.keys(propriedades.playlists);
+    // Statement
+    // Retorno por expressão
+    return (
+        <StyledTimeline>
+            {playlistNames.map((playlistName) => {
+                const videos = propriedades.playlists[playlistName];
+                console.log(playlistName);
+                console.log(videos);
+                return (
+                    <section>
+                        <h2>{playlistName}</h2>
+                        <div>
+                            {videos.map((video) => {
+                                return (
+                                    <a href={video.url}>
+                                        <img src={video.thumb} />
+                                        <span>
+                                            {video.title}
+                                        </span>
+                                    </a>
+                                )
+                            })}
+                        </div>
+                    </section>
+                )
+            })}
+        </StyledTimeline>
     )
 }
 
